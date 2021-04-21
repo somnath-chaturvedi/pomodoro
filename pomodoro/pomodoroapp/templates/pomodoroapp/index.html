@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Pomodoro</title>
+    <style>
+        body {
+            text-align: center;
+            font-size: 45px;
+            padding-top: 150px;
+            background-color: cyan;
+        }
+    </style>
+    <script>
+        let Seconds = 0;
+        let Minute = 24;
+        function seconds() {
+            Seconds--;
+            if (Seconds === -1) {
+                Seconds = 59;
+                document.querySelector('#minutes').innerHTML = Minute + ":";
+            }
+            document.querySelector('#seconds').innerHTML = Seconds;
+        }
+        function minutes() {
+            Minute--;
+            document.querySelector('#minutes').innerHTML = Minute + ":";
+        }
+        function breaks() {
+            document.querySelector('#text').innerHTML = "Take a break of 5 Minutes !"
+            document.querySelector('#minutes').innerHTML = 5 + ":";
+            Minute = 4;
+            Seconds = 0;
+        }
+        function tasks() {
+                document.querySelector('#text').innerHTML = "Task"
+                document.querySelector('#minutes').innerHTML = 25 + ":";
+                Minute = 24;
+                Seconds = 0;
+            }
+        document.addEventListener('DOMContentLoaded', function () {
+
+
+            document.querySelector('form').onsubmit = () => {
+                const task = document.querySelector('#task').value;
+                const li = document.createElement('li');
+                li.innerHTML = task;
+                document.querySelector('#tasks').append(li);
+                document.querySelector('#task').value = "";
+
+                return false;
+            }
+
+            setInterval(seconds, 1000);
+            setInterval(minutes, 60000);
+            setInterval(breaks, 1500000)
+            setInterval(tasks, 1800000)
+        })
+    </script>
+</head>
+
+<body>
+    <div id='min'>
+        <h1 id='minutes'>25:</h1>
+    </div>
+    <div id=sec>
+        <h1 id='seconds'>00</h1>
+    </div>
+    <h1 id='text'>Tasks</h1>
+    <ul id='tasks'></ul>
+    <form>
+        <input type="text" id='task' placeholder="New Task">
+        <input type="submit" id='submit'>
+    </form>
+</body>
+
+</html>
